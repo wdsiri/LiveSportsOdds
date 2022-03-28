@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LiveSportsOdds</string>
+    <string name="live_sports_odds">Live Sports Odds</string>
+    <string name="choose_a_sport">Choose a Sport:</string>
+</resources>
