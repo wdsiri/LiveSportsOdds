@@ -49,9 +49,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:scrollbars="vertical"
+        <ListView
+            android:id="@+id/sportList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>
