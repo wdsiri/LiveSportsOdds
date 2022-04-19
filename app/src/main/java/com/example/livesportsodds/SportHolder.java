@@ -6,10 +6,11 @@ import org.json.JSONObject;
 
 public class SportHolder {
 
-    public static final String [] sports = new String[0];
+    public static final String [] sports = new String[66];
 
     public SportHolder() {
-
+        for (int i = 0; i < sports.length; i++)
+            sports[i] = "";
 
 
     }
@@ -22,15 +23,14 @@ public class SportHolder {
         // dataArray.get(i).getString("sport");
 
         if (dataArray != null) {
-          //  System.out.println(dataArray.length());
+            //  System.out.println(dataArray.length());
             for (int i = 0; i < dataArray.length(); i++) {
-             //   System.out.println(i);
+                //   System.out.println(i);
                 JSONObject obj = dataArray.getJSONObject(i);
-            //    System.out.println(i);
+                //    System.out.println(i);
                 if (obj != null) {
-                    System.out.println(obj.toString());
-                    sports[i] = obj.getString("group");
-                    System.out.println(sports[i]);
+                    sports[i] = obj.getString("title");
+
                 }
                 else {
                     System.out.println("object is null");
