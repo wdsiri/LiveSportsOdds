@@ -1,16 +1,13 @@
 package com.example.livesportsodds;
 
-import android.app.ListActivity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,31 +15,29 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class OddsActivity extends AppCompatActivity {
 
-    SportHolder spHandler = new SportHolder();
+    OddsHolder oddsHandler = new OddsHolder();
+    SportHolder sportHandler = new SportHolder();
 
     boolean userSelect = false;
-    private String url1 = "https://odds.p.rapidapi.com/v1/sports";
-    private String LOG_TAG = MainActivity.class.getSimpleName();
-    private ArrayAdapter<String> sportAdapter;
+    private String url1 = "https://odds.p.rapidapi.com/v1/odds";
+    private String LOG_TAG = OddsActivity.class.getSimpleName();
+    private ArrayAdapter<String> oddsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        ListView sportList = findViewById(R.id.sportList);
-        sportAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, spHandler.sports);
+        ListView oddsList = findViewById(R.id.oddsList);
+        oddsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, oddsHandler.odds);
 
-        sportList.setAdapter(sportAdapter);
-        new FetchSport().execute();
+        oddsList.setAdapter(oddsAdapter);
+        new OddsActivity.FetchOdds().execute();
     }
 
-
-    class FetchSport extends AsyncTask<String,Void,String> {
+    class FetchOdds extends AsyncTask<String,Void,String> {
 
 
         @Override
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            String sport = null;
+            String odds = null;
             try {
                 URL url = new URL(url1);
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 reader = new BufferedReader(new InputStreamReader(in));
-                sport = getStringFromBuffer(reader);
+                odds = getStringFromBuffer(reader);
 
 
             } catch (Exception e) {
@@ -83,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            return sport;
+            return odds;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            sportAdapter.notifyDataSetChanged();
+            oddsAdapter.notifyDataSetChanged();
 
         }
 
@@ -102,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
                         buffer.append(line + '\n');
                     }
                     bufferedReader.close();
-                    return spHandler.getSport(buffer.toString());
+                    return oddsHandler.getOdds(buffer.toString());
                 } catch (Exception e) {
-                    Log.e("MainActivity", "Error" + e.getMessage());
+                    Log.e("OddsActivity", "Error" + e.getMessage());
                     return null;
                 } finally {
 
